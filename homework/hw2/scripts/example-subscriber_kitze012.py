@@ -16,3 +16,36 @@ This node will contain three subscribers:
     the robot’s x acceleration in a similar format to below
     - “/IMU – acceleration x: XX.XXXX”
 '''
+
+import rospy
+from std_msgs.msg import String
+from tf2_msgs.msg import TFMessage
+from sensor_msgs.msg import Imu
+
+def callback(msg):
+    rospy.loginfo("Recieved {}".format(msg.data))
+
+
+def callback_tf(msg):
+    x = msg.tranforms[0].tranform.translation.x     # Gets x position
+    w = msg.tranforms[0].tranform.rotation.w        # Gets rotation w
+    rospy.loginfo("/TF -- translation x: {:.4f} rotation w: {:.4f}".format(x, w))
+
+
+def callback_imu(msg):
+    x = msg.linear_acceleration.x                   # Gets linear acc in x
+    rospy.loginfo("/IMU – acceleration x: {:.4f}".format(x))
+
+
+def listener():
+    rospy.init_node('subscriber', anonymous=True)
+    rospy.Subscriber('chatter', String, callback)   # Subscriber to chatter topic
+    rospy.Subscriber('tf', TFMessage, callback_tf)  # Subscriber to tf topic
+    rospy.Subscriber('imu', Imu, callback_imu)      # Subscriber to imu topic
+
+    # Continue listening
+    rospy.spin()
+
+
+if __name__ == "__main__":
+    listener()
