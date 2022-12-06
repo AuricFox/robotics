@@ -1,0 +1,102 @@
+\documentclass[12pt]{article}
+\usepackage[legalpaper, margin=1in]{geometry}
+\usepackage{sectsty}
+\usepackage[font={small,it}]{caption}
+\usepackage{graphicx}
+\graphicspath{ {./} }
+
+\sectionfont{\fontsize{12}{15}\selectfont}
+\subsectionfont{\fontsize{12}{15}\selectfont}
+\subsubsectionfont{\fontsize{12}{15}\selectfont}
+
+\title{Robots in Agriculture}
+\author{Samuel Kitzerow, kitze012@umn.edu}
+\date{November 14, 2022}
+
+\begin{document}
+
+\maketitle
+% ==============================================================================================
+\section*{Abstract}
+Work in agriculture is often hard and physically taxing for human workers. In the U.S., an agricultural worker is 20 times more likely to die from illnesses related to heat stress than the average civilian worker~\cite{tigchelaar2020work}. The use of autonomous robots will help alleviate the burden of planting, maintaining, and harvesting crops. It is also estimated that the world population will reach nine billion by the year 2050 yet the labor resources will decrease for agriculture while the population in urban areas will increase~\cite{9096177}. The use of automated robots can help bridge the increasing gap in limited food and labor resources that growing populations need~\cite{zhou2022intelligent}. By using deep learning, robots can identify the physical features of crops such as strawberries and distinguish them based on ripeness~\cite{yu2019fruit}. These crops can then be harvested by robots and transported to a collection point. The end result produces a system capable of maintaining farmland and providing produce while minimizing the risk to human workers. This paper will discuss some of the common problems robots face in agriculture and possible solutions for a successful system based on a survey of other related works.
+
+% ==============================================================================================
+\section{Introduction}
+% The mentioned deep neural network algorithms (such as R-CNN, Fast R-CNN, Faster R-CNN, YOLO and SSD) can only roughly calculate the position of the target using the bounding box; they are unable to accurately extract contour and shape information.
+
+% ==============================================================================================
+\section{Problem Description}
+There are many problems to overcome when designing an automated robot suitable for agriculture. One such problem is navigation in an outdoor environment. This presents a challenge for navigation since vegetation often hides the load-bearing surfaces used by a robot to safely execute certain actions~\cite{1307135}; furthermore, collisions with crops or farm animals can result in damaged produce and loss in profits~\cite{madokoro2021prototype}. Another challenge that the robot must overcome is identifying produce suitable for picking and weed detection. Many methods employed for fruit detection have produced results lacking in accuracy and robustness~\cite{chen2021detecting}. This is important because consumers expected quality produce and will reject anything that is rotten or unripe. Certain methods can be used, such as BLOB analysis~\cite{dewi2021blob}, to detect the shape and color of the product; however, natural lighting can affect how the robot interprets the data since the lighting will cause the colors to change in intensity~\cite{wang2022review}. A third problem that the robot must overcome is picking/handling crops without damaging them. Many crops, like strawberries and tomatoes, are fragile and can be easily damaged so gentle handling during manipulation is required~\cite{xiong2020autonomous}. Consumers will also reject damaged produce just like rotten or unripe produce. It is important to overcome these three main challenges to guarantee the success of robots in agriculture.
+
+% ==============================================================================================
+\section{Related Work}
+% Verdant Robotics, Precision Agriculture
+
+% ==============================================================================================
+\section{Results and Insights}
+\subsection{Navigation}
+Navigation in an agricultural environment requires that a robot has a strong understanding of its surroundings since the environment it functions in is dynamic. Although the overall layout of a farm or plantation changes on a yearly basis and not on a daily one, there are still other factors to consider. The growth of vegetation and movement of livestock never ends so a robot needs to be able to pivot with such changes in order to prevent damage to itself, crops, or animals. Accurate navigation will also enable the system to efficiently track individual plants in a database so that adequate care can be provided. This helps boost production while minimizing costs and the harmful effects agriculture may have on the earth. Precision farming can be utilized by spraying and fertilizing individual plants with a small amount of material instead of large quantities over a large area of farmland~\cite{LEPEJ2016160}. Other labor intensive tasks such as killing parasitic weeds and harvesting produce can be mitigated with proper navigational techniques.
+
+One of the challenges for robot navigation is minimizing the total time and distance travelled while maximizing the harvest yield~\cite{MAHMUD2019488}. Farms can span many acres with multiple potential pathways for a robot to take. It could easily take an inefficient path where it loses power and becomes stranded. Another challenge is detecting obstacles or hazards that impede the navigation of a robot. The conditions of the terrain can greatly impact its performance. Wheel based interactions with compacted or lose soil can effect the power consumption and drain the battery or fuel~\cite{REINA2017124}; thus, the robot may become stranded which could cost farmers valuable time and resources to recover.
+
+\subsubsection{Path Planning}
+There are many methods to create planned paths which minimize time and travel distance, however, the algorithm used for path planning in agriculture must also account for other objectives such as number of turns, harvest yields, and material usage to name a few. Deterministic algorithms like Dijkstra's or Bellman-Ford algorithm would need to be adapted to handle such criteria~\cite{MAHMUD2019488}. One solution is to use an evolutionary multi-objective optimization (EMO) algorithm such as NSGA-III which resolves multi-objective problems like the ones encountered in agriculture. These objectives can be expressed as:
+
+\begin{equation}
+    f: X \rightarrow Y, x \in \Omega
+\end{equation}
+
+\noindent Where $\Omega$ is the decision space $(x_1, x_2..,x_n)$, and $Y$ is the objective space which forms a Pareto set or set of optimal solutions generated through an evolutionary process~\cite{zhou2021problem,zitzler2004tutorial}. A set of decisions can be generated by factoring in certain objectives, such as harvest yield and travel distance, to produce a Pareto set. From this set, a robot can formulate a more informed decision on choosing the most dominant solution which in this case is the optimal path. Formulating such a path for a robot to follow is one thing but it must also have a set of reference points in order to even create a path.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.80\textwidth]{farmgps.png}
+\caption{A Farm with GPS points marking intersections and segments sectioned off based on plant type.}
+\end{figure}
+
+One of the go to methods for determining points of reference for industrial machines is through GPS which serves as an important tool for precision agriculture~\cite{pandey2021evaluation}. The use of GPS coordinates in conjunction with monitoring the position of a robot can help guide it along generated pathways. A farmer can add a set of GPS coordinates to the robot's knowledge base that correspond with intersections or points of interest. They can also designate a grid of coordinates to a certain crop. Being able to mark grids allows farmers to assign certain tasks and divert the robot to areas of greater precedence. The robot can then use the GPS coordinates as a main set of reference points and generate a set of sub-points to build a planned path. The sub-points would designate the entry and exit locations of each row of crops. Some downsides to using GPS is that the GPS coordinates can produce some significant error or null readings due to dead zones~\cite{pandey2021evaluation}. A dual based receiver for GPS increases the accuracy of the coordinates but does not account for potential dead zones.
+
+\subsubsection{Simultaneous Localization and Mapping}
+
+Simultaneous Localization and Mapping (SLAM) is a promising alternative to GPS when assisting robots with navigation. SLAM is the process a robot takes to build a map of its environment and, at the same time, use the map to determine its location~\cite{durrant2006simultaneous}. The location of any landmarks are estimated without needing any priori knowledge of the robots present location. Visual SLAM, is a vision-based robot that uses a set of cameras to evaluate its environment and makes decisions based on perceived features to navigate~\cite{gul2019comprehensive}. 
+
+Similar to GPS coordinates, unique landmarks can be placed at intersections or points of interest to help guide the robot from point to point. These landmarks can come it the form of road signs or other distinct objects that do not match the surrounding environment. Think of a bright colored object or sign plastered with a large number and a white background similar to a speed limit sign. These landmarks act as a point of reference for the robot which can calculate the distance to the landmark, generate a series of intermediate points, and formulate an optimal path; furthermore, the landmarks can be used to train a robot to map its environment similar to a Roomba\textsuperscript{\tiny\textregistered} vacuum robot. Over time the robot will be able to acquire a knowledge base of its environment and be able to navigate freely.
+
+% ==============================================================================================
+\subsection{Plant and Obstacle Detection}
+One of the most important aspect of agriculture is the maintenance of healthy crops. This involves killing weeds, removing diseased plants, fertilizing, and applying pesticides. An experienced farmer can easily determine what is a healthy plant and what needs to be removed, but this task is very labor intensive and time consuming. Treating the whole area with pesticides and fertilizer offers a simple fix but at a heavy financial and ecological cost. Vision based robots can assist farmers with maintaining fields and even harvesting crops, but they need a way to determine the type of plant and any obstacles that may be in the way. 
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.80\textwidth]{weedDetection.PNG}
+\caption{Mask R-CNN used detect and instantiate different plant species~\cite{valicharla2021weed}.}
+\end{figure}
+
+Mask Region Convolution Neural Network (Mask R-CNN) offers a solution for both crop detection and obstacle avoidance. Mask R-CNN is an extension of Faster R-CNN which is an object detection algorithm that identifies the location of objects within an image~\cite{dollar2017mask, yu2019fruit, chu2021deep}. The main difference between Faster R-CNN and Mask R-CNN is that Mask R-CNN can accurately extract contour and shape information by predicting a segmentation mask in a pixel-to-pixel manner~\cite{dollar2017mask, yu2019fruit}. This is important because it helps the robot determine whether the plant is a crop or a weed based on its unique characteristics. Plants that are crops can be fertilized and sprayed with pesticides while weeds are sprayed with weed killer or removed. This helps reduce the amount of material needed to maintain a field and reduces the risk of chemicals leaching out into the environment.
+
+The fruit ripeness and health of the plant can also be detected using Mask R-CNN. Once a ripe crop is detected, Mask R-CNN determines what orientation the robot must take in order to successfully harvest certain crops. Strawberries are particularly sensitive when being harvested and must plucked at the stem unlike apples which can be grabbed anywhere on the fruit and picked. The location of the picking points are base on the instance segmentation of the crop image. An axis is then determined to identify the growth shape of the target crop. A set of picking points are finally calculated that tell the robot where to pick the target crop~\cite{yu2019fruit}. For diseased plants, it is important to identify affected plants at early stages in order to provide appropriate treatment plans so quality and economic loss can be mitigated~\cite{afzaal2021instance}.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.80\textwidth]{locStem.PNG}
+\caption{Using Mask R-CNN to detect a strawberry and locate the picking point: b. maximum of contour coordinate, c. contour of interest, d. dividing line, e. crop center, f. fruit axis, g. sample A, h. sample B, i. crop center, j. vertex of contour, and k. picking point~\cite{yu2019fruit}}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.80\textwidth]{dp6.png}
+\caption{Using Mask R-CNN to detect diseased plants and spoiled produce~\cite{afzaal2021instance}}
+\end{figure}
+
+% tactel finger tips
+
+% ==============================================================================================
+\section{Future Work}
+
+% ==============================================================================================
+\section{Conclusion}
+
+\bibliographystyle{plain}
+\bibliography{bibliography.bib}
+
+\end{document}
