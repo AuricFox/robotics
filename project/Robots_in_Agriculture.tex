@@ -13,7 +13,7 @@
 
 \title{Robots in Agriculture}
 \author{Samuel Kitzerow, kitze012@umn.edu}
-\date{November 14, 2022}
+\date{December 12, 2022}
 
 \begin{document}
 
@@ -24,12 +24,17 @@ Work in agriculture is often hard and physically taxing for human workers. In th
 
 % ==============================================================================================
 \section{Introduction}
-% The mentioned deep neural network algorithms (such as R-CNN, Fast R-CNN, Faster R-CNN, YOLO and SSD) can only roughly calculate the position of the target using the bounding box; they are unable to accurately extract contour and shape information.
-It is estimated that the world population will reach nine billion by the year 2050 yet the labor resources will decrease for agriculture while the population in urban areas will increase~\cite{9096177}. The use of automated robots can help bridge the increasing gap in limited food and labor resources that growing populations need~\cite{zhou2022intelligent}. 
+It is estimated that the world population will reach nine billion by the year 2050 yet the labor resources will decrease for agriculture while the population in urban areas will increase~\cite{9096177}. The use of automated robots can help bridge the increasing gap in limited food and labor resources that growing populations need~\cite{zhou2022intelligent}. Precision agriculture aims to increase the food supply while reducing operating costs and any negative environmental impacts. The selective use of fertilizers and pesticides by engaging in precision spraying of individual plants will mitigate chemical runoff that could have disastrous effects on wildlife. Likewise, inspecting each plant for ripe produce or disease will help reduce waste and maximize output. Human beings can effectively accomplish these tasks, but it is time-consuming and laborious. Robots can substitute for people but lack a sufficient knowledge base to effectively navigate a farm or distinguish crops from weeds. This paper discusses what methods are applied to each problem and how they work.
+
+In literature, there are multiple techniques to handle navigation. Some navigation algorithms are only equipped to perform in an indoor environment which cannot be used by agricultural robots since they must operate in an outdoor environment. Still, there are a plethora of algorithms that successfully execute optimal navigation in an outdoor environment. Some of these techniques include fuzzy logic, optimization algorithms, potential field methods, and neural network approaches just to name a few~\cite{mohanta2019knowledge}. In agriculture, there are other equally important objectives than just the shortest path. I robot must also be able to maximize harvest yields and minimize material usage.
+
+Evolutionary multi-objective optimization (EMO) algorithms, addressed by Mahmud \emph{et al.}~\cite{MAHMUD2019488}, provide a useful strategy for optimizing paths where multiple tasks need to be accomplished. Many such algorithms have been proposed such as NSGA-II, NSGA-III, and others. The principles of each algorithm are the same. Each takes in a set of fitness functions for each objective and generates a Pareto front or set of decisions. A robot can pick any decision to construct an optimal path that will accomplish all the objectives.
+
+Literary review has shown that deep learning is the most effective strategy for object detection and classification. The most common technique being convolutional neural networks such as R-CNN, Fast R-CNN, Faster R-CNN, YOLO, and SSD to name a few. One problem with the mentioned algorithms is that they can only roughly calculate the position of the target using the bounding box and are unable to accurately extract contour and shape information~\cite{yu2019fruit}. The robot will be able to identify plants and crops, but it will not be able to effectively harvest or spray the targeted object. Mask R-CNN provides a practical way of detecting, classifying, and segmenting targeted objects. This approach enables the robot to efficiently harvest crops and spray plants.
 
 % ==============================================================================================*
 \section{Problem Description}
-The problem being addressed in this paper is the use of robots to achieve precision agriculture (PA). The goal of PA is to reduce costs while maximizing profits. A robot accomplishes this by substituting for the human workforce and selectively caring for each individual plant. This means spraying each individual plant with pesticides and fertilizers instead of vast areas of farmland. This will reduce operating costs and prevent potentially hazardous chemicals from leaching into the environment. A robot can also selectively harvest crops based on ripeness which will help add to the food supply and shrink the gap in the growing labor shortage.
+The problem being addressed in this paper are the challenges robots face to achieve precision agriculture (PA). The goal of PA is to reduce costs while maximizing profits. A robot accomplishes this by substituting for the human workforce and selectively caring for each individual plant. This means spraying each individual plant with pesticides and fertilizers instead of vast areas of farmland. This will reduce operating costs and prevent potentially hazardous chemicals from leaching into the environment. A robot can also selectively harvest crops based on ripeness which will help add to the food supply and shrink the gap in the growing labor shortage.
 
 Some challenges that robots face when addressing this problem are autonomous navigation in an outdoor environment and the identification of crops. Navigation presents an especially difficult issue since an outdoor environment is not restricted by walls or barriers that an indoor environment provides. A robot could wander aimlessly into hazardous areas such as roads or waterways which could lead to its destruction. Therefore, a robot must have a way of knowing its location and how to plan for optimal pathways to its goal destination. Another issue impeding navigation is that vegetation covers vast areas of the farmland which often hides the load-bearing surfaces used by a robot to safely execute certain actions~\cite{1307135}. A robot cannot simply run over the obstacles since collisions with crops or farm animals can result in damaged produce and loss in profits~\cite{madokoro2021prototype}. 
 
@@ -134,7 +139,7 @@ The fruit ripeness and health of the plant can also be detected using Mask R-CNN
 \label{fig:disease}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}[h!]
 \centering
 \includegraphics[width=1.0\textwidth]{process.png}
 \caption{Process of detecting and segmenting tomatoes using Mask R-CNN~\cite{zu2021detection}}
@@ -150,7 +155,9 @@ Mask R-CNN works by evaluating collected images for detection and segmentation. 
 
 % ==============================================================================================
 \section{Conclusion}
+In this paper, the challenges of conducting proper navigation and plant detection with possible solutions to assist robots in precision agriculture were discussed. Robots need an algorithm to account for multiple objectives that maximize output, reduce costs, and minimize environmental impacts. Therefore, a robot should use an EMO algorithm paired with SLAM to navigate optimally. The robot also needs a way to detect, classify, and segment plants and produce to distinguish between weeds, crops, ripe fruits, and rotten products. Mask R-CNN will help the robot make informed distinctions. Overall, these applications can improve the performance of robots in precision agriculture.
 
+% ==============================================================================================
 \bibliographystyle{plain}
 \bibliography{bibliography.bib}
 
